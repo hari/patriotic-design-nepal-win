@@ -11,6 +11,7 @@ using Windows.Graphics.Display;
 using Windows.Graphics.Imaging;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.IO;
+using Windows.UI.Popups;
 
 namespace Patriotic_Design_Nepal
 {
@@ -27,6 +28,7 @@ namespace Patriotic_Design_Nepal
             InitializeComponent();
             DataTransferManager dataTransferManager = DataTransferManager.GetForCurrentView();
             dataTransferManager.DataRequested += new TypedEventHandler<DataTransferManager, DataRequestedEventArgs>(ShareImageHandler);
+            
         }
 
         private async void ShareImageHandler(DataTransferManager sender, DataRequestedEventArgs args)
@@ -207,6 +209,8 @@ namespace Patriotic_Design_Nepal
 
                 await encoder.FlushAsync();
             }
+            MessageDialog md = new MessageDialog(string.Format("Saved to: {0} as {1}", ApplicationData.Current.LocalFolder.Path, FileName), "Saved");
+            md.ShowAsync();
             FACTOR = 3;
             CreateImage();
         }
